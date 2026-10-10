@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>JobBoard | Find Your Dream Job</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #111827;
+        }
+
+        nav {
+            background: #111827;
+            padding: 20px 8%;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h2 {
+            margin: 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            background: #2563eb;
+            padding: 10px 18px;
+            border-radius: 7px;
+        }
+
+        .hero {
+            background: linear-gradient(
+                135deg,
+                #1e3a8a,
+                #2563eb
+            );
+
+            color: white;
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin: 0 0 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .search-box {
+            max-width: 850px;
+            margin: -30px auto 40px;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            position: relative;
+        }
+
+        .search-box form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .search-box button {
+            padding: 15px 25px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .search-box button:hover {
+            background: #1d4ed8;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 20px 50px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-header h2 {
+            margin: 0;
+        }
+
+        .job-count {
+            color: #6b7280;
+        }
+
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(300px, 1fr)
+            );
+
+            gap: 25px;
+        }
+
+        .job-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            transition: 0.2s;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .job-card h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #111827;
+        }
+
+        .company {
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .info {
+            color: #6b7280;
+            margin: 8px 0;
+        }
+
+        .salary {
+            color: #16a34a;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .description {
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        .view-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 11px 18px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .view-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .no-jobs {
+            background: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 12px;
+        }
+
+        .no-jobs h3 {
+            margin-bottom: 10px;
+        }
+
+        .no-jobs p {
+            color: #6b7280;
+        }
+
+        .clear-search {
+            display: inline-block;
+            margin-top: 15px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        footer {
+            background: #111827;
+            color: #9ca3af;
+            text-align: center;
+            padding: 25px;
+        }
+
+        @media (max-width: 650px) {
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .search-box form {
+                flex-direction: column;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+    <h2>JobBoard</h2>
+
+    <a href="{% url 'post_job' %}">
+        + Post a Job
+    </a>
+
+</nav>
+
+
+<section class="hero">
+
+    <h1>Find Your Dream Job</h1>
+
+    <p>
+        Discover opportunities and take the next step in your career.
+    </p>
+
+</section>
+
+
+<div class="search-box">
+
+    <form method="GET" action="{% url 'job_list' %}">
+
+        <input
+            type="text"
+            name="q"
+            value="{{ query }}"
+            placeholder="Search by job title, company or location..."
+        >
+
+        <button type="submit">
+            🔎 Search
+        </button>
+
+    </form>
+
+</div>
+
+
+<div class="container">
+
+    <div class="section-header">
+
+        <h2>
+            {% if query %}
+                Search Results
+            {% else %}
+                Latest Jobs
+            {% endif %}
+        </h2>
+
+        <span class="job-count">
+            {{ jobs|length }} job{{ jobs|length|pluralize }}
+        </span>
+
+    </div>
+
+
+    {% if jobs %}
+
+        <div class="job-grid">
+
+            {% for job in jobs %}
+
+                <div class="job-card">
+
+                    <h3>
+                        {{ job.title }}
+                    </h3>
+
+                    <div class="company">
+                        {{ job.company }}
+                    </div>
+
+                    <div class="info">
+                        📍 {{ job.location }}
+                    </div>
+
+                    <div class="salary">
+                        💰 {{ job.salary }}
+                    </div>
+
+                    <div class="description">
+                        {{ job.description|truncatewords:25 }}
+                    </div>
+
+                    <a
+                        href="{% url 'job_detail' job.id %}"
+                        class="view-btn"
+                    >
+                        View Details →
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="no-jobs">
+
+            <h3>
+                {% if query %}
+                    No Jobs Found
+                {% else %}
+                    No Jobs Available
+                {% endif %}
+            </h3>
+
+            <p>
+                {% if query %}
+                    Try searching with a different keyword.
+                {% else %}
+                    Check back later for new opportunities.
+                {% endif %}
+            </p>
+
+            {% if query %}
+
+                <a
+                    href="{% url 'job_list' %}"
+                    class="clear-search"
+                >
+                    Clear Search
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+<footer>
+
+    © 2026 JobBoard. All rights reserved.
+
+</footer>
+
+
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>My Applications | JobBoard</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #111827;
+        }
+
+        nav {
+            background: #111827;
+            color: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h2 {
+            margin: 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #6b7280;
+        }
+
+        .application-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .application-card h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .company {
+            color: #2563eb;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .info {
+            color: #6b7280;
+            margin: 8px 0;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-weight: bold;
+        }
+
+        .date {
+            color: #6b7280;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        .empty {
+            background: white;
+            padding: 60px 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .empty p {
+            color: #6b7280;
+        }
+
+        .browse-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 20px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+    <h2>JobBoard</h2>
+
+    <div>
+
+        <a href="{% url 'job_list' %}">
+            Jobs
+        </a>
+
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+
+    <div class="header">
+
+        <h1>
+            My Applications
+        </h1>
+
+        <p>
+            Track the jobs you have applied for and check their current status.
+        </p>
+
+    </div>
+
+
+    {% if applications %}
+
+        {% for application in applications %}
+
+            <div class="application-card">
+
+                <h2>
+                    {{ application.job.title }}
+                </h2>
+
+                <div class="company">
+                    {{ application.job.company }}
+                </div>
+
+                <div class="info">
+                    📍 {{ application.job.location }}
+                </div>
+
+                <div class="info">
+                    💰 {{ application.job.salary }}
+                </div>
+
+                <div class="status">
+                    Status: {{ application.status }}
+                </div>
+
+                <div class="date">
+                    Applied on:
+                    {{ application.applied_at|date:"d M Y, h:i A" }}
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+
+            <h2>
+                No Applications Yet
+            </h2>
+
+            <p>
+                You haven't applied for any jobs yet.
+            </p>
+
+            <a
+                href="{% url 'job_list' %}"
+                class="browse-btn"
+            >
+                Browse Jobs
+            </a>
+
+        </div>
+
+    {% endif %}
+
+
+</div>
+
+
+</body>
+
+</html>

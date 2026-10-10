@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Apply for {{ job.title }}</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        nav {
+            background: #111827;
+            padding: 20px 8%;
+            color: white;
+        }
+
+        nav h2 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .form-box {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #111827;
+        }
+
+        .job-name {
+            color: #2563eb;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 20px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            background: #f9fafb;
+        }
+
+        .file-info {
+            font-size: 13px;
+            color: #666;
+            margin-top: -12px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <h2>JobBoard</h2>
+</nav>
+
+<div class="container">
+
+    <a href="{% url 'job_detail' job.id %}" class="back">
+        ← Back to Job
+    </a>
+
+    <div class="form-box">
+
+        <h1>Apply for Job</h1>
+
+        <div class="job-name">
+            {{ job.title }} at {{ job.company }}
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <label for="name">Full Name</label>
+
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter your full name"
+                required
+            >
+
+            <label for="email">Email Address</label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+            >
+
+            <label for="phone">Phone Number</label>
+
+            <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="Enter your phone number"
+                required
+            >
+
+            <label for="resume">Resume</label>
+
+            <input
+                type="file"
+                id="resume"
+                name="resume"
+                accept=".pdf"
+                required
+            >
+
+            <div class="file-info">
+                Please upload your resume in PDF format.
+            </div>
+
+            <label for="cover_letter">Cover Letter</label>
+
+            <textarea
+                id="cover_letter"
+                name="cover_letter"
+                placeholder="Write your cover letter..."
+            ></textarea>
+
+            <button type="submit">
+                Submit Application
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
